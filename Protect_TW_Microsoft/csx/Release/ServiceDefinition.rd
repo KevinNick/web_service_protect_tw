@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<serviceModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Protect_TW_Microsoft" generation="1" functional="0" release="0" Id="c8602e24-c6a0-4fda-8935-4571c6b1834e" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
+<serviceModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Protect_TW_Microsoft" generation="1" functional="0" release="0" Id="8d96876f-cc60-4bef-9f02-46281d5c3a99" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
   <groups>
     <group name="Protect_TW_MicrosoftGroup" generation="1" functional="0" release="0">
       <componentports>
@@ -71,9 +71,9 @@
     </group>
   </groups>
   <implements>
-    <implementation Id="441b2dc9-38d2-4e59-83ca-27eb9121127b" ref="Microsoft.RedDog.Contract\ServiceContract\Protect_TW_MicrosoftContract@ServiceDefinition">
+    <implementation Id="b95400d3-adb8-4419-964a-f7d10596914e" ref="Microsoft.RedDog.Contract\ServiceContract\Protect_TW_MicrosoftContract@ServiceDefinition">
       <interfacereferences>
-        <interfaceReference Id="eabcc598-97fc-4b5f-8e06-2be89251b0bf" ref="Microsoft.RedDog.Contract\Interface\WCFServiceWebRole1:Endpoint1@ServiceDefinition">
+        <interfaceReference Id="c951839a-5e29-4111-b272-b2f6d3ef4e9d" ref="Microsoft.RedDog.Contract\Interface\WCFServiceWebRole1:Endpoint1@ServiceDefinition">
           <inPort>
             <inPortMoniker name="/Protect_TW_Microsoft/Protect_TW_MicrosoftGroup/WCFServiceWebRole1:Endpoint1" />
           </inPort>

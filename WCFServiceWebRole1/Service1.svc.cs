@@ -662,6 +662,8 @@ namespace WCFServiceWebRole1
             return ret_messagegroup;
         }
 
+        
+
         /*
          *   type:
          *      0: 全部
@@ -850,12 +852,26 @@ namespace WCFServiceWebRole1
             TimeZoneInfo est = TimeZoneInfo.FindSystemTimeZoneById("Taipei Standard Time"); // 取得台北時區與格林威治標準時間差
             DateTime targetTime = TimeZoneInfo.ConvertTime(today, est); // 轉換為台北時間
             alarm_info.AlarmTime = targetTime;
+            
 
             try
             {
                 DB.AlarmInfo.InsertOnSubmit(alarm_info);
                 DB.SubmitChanges();
                 ret = "success";
+                Service1 service = new Service1();
+                List<UserInfo> find_user = find_group_user(userid);
+                foreach (var item in find_user)
+                {
+                    if (item.UserID != int.Parse(userid))
+                    {
+                        NotificationMessage messageString = new NotificationMessage();
+                        messageString.Message = "你的群組有新告警";
+                        messageString.Module = "1";
+                        messageString.Type = "0";
+                        service.NotificationSend(item.UserID, messageString);
+                    }
+                }
             }
             catch (Exception e)
             {
@@ -863,6 +879,37 @@ namespace WCFServiceWebRole1
             }
 
             return ret;
+        }
+
+        public List<UserInfo> find_group_user(string UserID)
+        {
+            Protect_DBDataContext DB = new Protect_DBDataContext();
+            List<MessageInfo> ret_messagegroup = new List<MessageInfo>();
+
+            // 根據UserID挑出group
+            var group_db =
+                from search_group in DB.GroupMapping
+                where search_group.UserID == int.Parse(UserID)
+                select search_group;
+
+            List<UserInfo> ret_user = new List<UserInfo>();
+
+            foreach (var group_items in group_db)
+            {
+                foreach (var item in group_items.UserGroup.GroupMapping)
+                {
+                    var user =
+                         from search_user in ret_user
+                         where search_user.UserID == item.UserInfo.UserID
+                         select search_user;
+                    if (user.Count() == 0)
+                    {
+                        ret_user.Add(item.UserInfo);
+                    }
+                }
+            }
+
+            return ret_user;
         }
 
         // 發送Notification
@@ -1014,7 +1061,9 @@ namespace WCFServiceWebRole1
             {
                 if (distance(latitude, longitude, item.UserLatitude.ToString(), item.UserLongitude.ToString()) <= 10)
                 {
-                    String message = "周圍危險氣體過高，請注意！天然氣數值：" + l_gas;
+                    String message = "周圍危險氣體過高，請注意！";
+                    Service1 service = new Service1();
+                    service.add_alarm_info(item.UserID.ToString(), item.UserLatitude.ToString(), item.UserLongitude.ToString(), message, "7", Guid.NewGuid().ToString());
                     NotificationMessage messageString = new NotificationMessage();
                     messageString.Message = message;
                     messageString.Module = "1";
