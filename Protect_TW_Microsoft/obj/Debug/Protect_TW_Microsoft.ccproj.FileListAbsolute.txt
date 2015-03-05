@@ -1,0 +1,2 @@
+C:\Users\USER\documents\visual studio 2012\Projects\Protect_TW_Microsoft\Protect_TW_Microsoft\bin\Debug\ServiceConfiguration.cscfg
+C:\Users\USER\documents\visual studio 2012\Projects\Protect_TW_Microsoft\Protect_TW_Microsoft\bin\Debug\ServiceDefinition.csdef
